@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>注册</title>
+	<meta charset="utf-8">
+	<meta name="author" content="">
+	<meta name="description" content="" />
+
+	<link rel="stylesheet" type="text/css" href="css/reset.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<script type="text/javascript" src="login/jquery.js"></script>
+	<script type="text/javascript" src="js/TimeCircles.js"></script>
+	<script type="text/javascript" src="js/backstretch.js"></script>
+	<script type="text/javascript" src="js/main.js"></script>
+</head>
+
+<body>
+		
+	<!-- <div class="container">
+		<div class="row mt50 pt50">
+			<div class="col-md-4"><a id="btn3" class="btn btn-lg btn-success">Demo 3</a></div>
+		</div>
+	</div> -->
+	<section class="content wrapper">
+
+		<h1>欢迎注册家教系统</h1>
+		<p class="description">描述</p>
+
+		<div class="subscription_form clearfix">
+			<div>
+				<form action="#" method="post">
+					<tr>
+						<input type="name" id="name" placeholder="enter your accounts">
+                    </tr>
+                    <tr>
+						<input type="name" id="pw1" placeholder="enter your password">
+                    </tr>
+                    <tr>
+						<input type="name" id="pw2" placeholder="confirm your password" onkeyup="validate()"><span id="tishi"></span>
+                    </tr>
+                    <tr>
+						<input type="name" id="telephone" placeholder="enter your telephone">
+                    </tr>
+                    <tr>
+						<input type="name" id="photo" placeholder="enter your photo">
+                    </tr>
+                    <tr>
+						<input type="name" id="sex" placeholder="enter your sex">
+                    </tr>
+                    <tr>
+						<input type="name" id="grade" placeholder="enter your grade">
+                    </tr>
+                    <tr>
+						<input type="name" id="school" placeholder="enter your school">
+                    </tr>
+					<tr><input type="password" id="birthday" placeholder="enter your birthday"><button
+						type="submit" id="submit"><i class="icon"></i></button></tr>
+				</form>
+			</div>
+		</div>
+
+		<div class="counter clear" data-date="2019-08-28 00:00:00"></div>
+
+	</section>
+
+    <script>
+        function validate() {
+        var pw1 = document.getElementById("pw1").value;
+        var pw2 = document.getElementById("pw2").value;
+        if(pw1 == pw2) {
+        document.getElementById("tishi").innerHTML="<font color='white'>两次密码相同</font>";
+        document.getElementById("submit").disabled = false;
+        }
+        else {
+        document.getElementById("tishi").innerHTML="<font color='white'>两次密码不相同</font>";
+        document.getElementById("submit").disabled = true;
+        }
+        }
+        </script>
+
+</body>
+
+</html>

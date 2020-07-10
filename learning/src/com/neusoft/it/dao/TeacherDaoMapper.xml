@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neusoft.it.dao.TeacherDao">
+	<resultMap type="com.neusoft.it.entity.teacher" id="tbaseMapper">
+	  <id column="tea_id" property="teaId"/>
+	  <result column="tea_name" property="teaName"/>
+	  <result column="tea_tel" property="teaTel"/>
+	  <result column="tea_information" property="teaInformation"/>
+	  <result column="tea_pwd" property="teaPwd"/>
+	  
+	 
+	</resultMap>
+		<select id="login" resultMap='tbaseMapper'>
+		select * from teacher where tea_name= #{name} and tea_pwd= #{pwd}
+	</select>
+	<select id="selectById" resultMap='tbaseMapper'>
+		select * from teacher where tea_id=#{id}
+	</select>
+    <select id="selectByName" resultMap='tbaseMapper'>
+		select * from teacher where tea_name=#{name}
+	</select>
+	<select id="selectAll" resultMap="tbaseMapper">
+		select * from teacher
+	</select> 
+	<sql id="wheresql">
+	   <where>
+			<if test="teaName!=null and teaName!=''">
+			   and tea_name like #{teaName}
+			</if>
+			
+	    </where>
+	</sql>
+	<select id="selectList" resultMap="tbaseMapper">
+		select * from teacher <include refid="wheresql"/>
+	</select>
+	
+	<select id="selectOne" resultMap="tbaseMapper">
+		select * from teacher <include refid="wheresql"/>
+	</select>
+	
+
+	<insert id="insert">
+		insert into teacher values
+		(default,#{o.teaName},#{o.teaTel},#{o.teaInformation},#{o.teaPwd})
+	</insert>
+	<update id="update">
+		update 
+			teacher
+		set 
+			tea_name=#{o.teaName}
+			,tea_tel=#{o.teaTel}
+			,tea_information=#{o.teaInformation}
+			,tea_pwd=#{o.teaPwd}
+		where 
+			tea_id=#{teaId}
+	</update>
+	<delete id="delete">
+		delete from teacher where tea_id=#{teaId}
+	</delete>
+</mapper>

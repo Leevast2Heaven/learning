@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:mvc="http://www.springframework.org/schema/mvc" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+     xmlns:context="http://www.springframework.org/schema/context"
+     xmlns:aop="http://www.springframework.org/schema/aop"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/aop 
+        http://www.springframework.org/schema/aop/spring-aop.xsd
+        ">
+  
+    <context:component-scan base-package="com.neusoft.it.ui"/>
+    <context:component-scan base-package="com.neusoft.it.service"/>
+	<mvc:annotation-driven/>
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+		p:prefix="/WEB-INF/jsp/" p:suffix=".jsp"
+		p:viewClass="org.springframework.web.servlet.view.JstlView">
+	</bean>
+	
+	<!-- 拦截器intercepeor -->
+	<mvc:interceptors> 
+	     <mvc:interceptor>  
+	    <!-- 客户端拦截器 -->
+	         <mvc:mapping path="/custom/**"/>
+	         <!-- custom下面的网址都要经过拦截器，除了登录跟注册 -->
+	         <mvc:exclude-mapping path="/custom/login"/>   
+	         <mvc:exclude-mapping path="/custom/reg"/>   
+	         <bean class="com.neusoft.it.ui.interceptor.CustomLoginInterceptor"/>  
+	    </mvc:interceptor> 
+	    <mvc:interceptor>  
+	    <!-- 教师端拦截器 -->
+	         <mvc:mapping path="/teacher/**"/>
+	         <!-- teacher下面的网址都要经过拦截器，除了登录跟注册 -->
+	         <mvc:exclude-mapping path="/teacher/login"/>   
+	         <mvc:exclude-mapping path="/teacher/reg"/>   
+	         <bean class="com.neusoft.it.ui.interceptor.TeacherLoginInterceptor"/>  
+	    </mvc:interceptor> 
+	    <mvc:interceptor>  
+	    <!-- 管理员端拦截器 -->
+	         <mvc:mapping path="/administrator/**"/>
+	         <!-- teacher下面的网址都要经过拦截器，除了登录跟注册 -->
+	         <mvc:exclude-mapping path="/administrator/login"/>   
+	         <mvc:exclude-mapping path="/administrator/reg"/>   
+	         <bean class="com.neusoft.it.ui.interceptor.AdministratorLoginInterceptor"/>  
+	    </mvc:interceptor> 
+	</mvc:interceptors>
+	
+	<import resource="applicationContext.xml"/> <!-- 导入其他配置文件 -->
+</beans>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neusoft.it.dao.ComplaintDao">
+	<resultMap type="com.neusoft.it.entity.complaint" id="cpbaseMapper">
+	  <id column="com_id" property="comId"/>
+	  <result column="com_cus_id" property="id"/>
+	  <result column="com_class_id" property="classId"/>
+	  <result column="com_reason" property="reason"/>
+	  <result column="com_request" property="request"/>
+	  <result column="com_time" property="comTime"/>
+	  <result column="req_time" property="reqTime"/>
+	  
+	  <result column="cus_name" property="cusName"/>
+	  <result column="cus_pwd" property="cusPwd"/>
+	  <result column="cus_tel" property="cusTel"/>
+	  <result column="cus_photo" property="cusPhoto"/>
+	  <result column="cus_sex" property="cusSex"/>
+	  <result column="cus_grade" property="cusGrade"/>
+	  <result column="cus_school" property="cusSchool"/>
+	  <result column="cus_birthday" property="cusBirthday"/>
+	  
+	  <result column="sub_class_name" property="className"/>
+	  <result column="sub_subjects" property="subjects"/>
+	  <result column="sub_tuition" property="tuition"/>
+	  <result column="sub_teacher" property="teacher"/>
+	  <result column="start_date" property="startDate"/>
+	  <result column="end_date" property="endDate"/>
+	  <result column="total_hours" property="totalHours"/>
+	  <result column="class_statu" property="classStatu"/>
+	  <result column="appr_time" property="apprTime"/>
+
+	</resultMap>
+	
+	<select id="selectById" resultMap='cpbaseMapper'>
+		select * from complaint cm
+		join customs_message c on cm.com_cus_id=c.id
+		join subject s on cm.com_class_id=s.class_id
+		where com_id=#{comId}
+	</select>
+
+	<select id="selectAll" resultMap="cpbaseMapper">
+		select * from complaint cm
+		join customs_message c on cm.com_cus_id=c.id
+		join subject s on cm.com_class_id=s.class_id
+	</select> 
+	<insert id="insert">
+		insert into complaint values
+		(default,#{o.id},#{o.classId},#{o.reason},#{o.request},#{o.comTime},#{o.reqTime}
+	</insert>
+	<update id="update">
+		update 
+			complaint
+		set 
+			com_cus_id=#{o.id} 
+			,com_class_id=#{o.classId}
+			,com_reason=#{o.reason}
+			,ad_request=#{o.request}
+			,com_time=#{o.comTime}
+			,req_time=#{o.reqTime}
+		where 
+			com_id=#{comId}
+	</update>
+	<delete id="delete">
+		delete from complaint where com_id=#{comId}
+	</delete>
+</mapper>

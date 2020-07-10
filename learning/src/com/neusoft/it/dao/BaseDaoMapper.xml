@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neusoft.it.dao.BaseDao" >
+	<!-- 按id查找一个 -->
+    <select id="selectOne" resultType="hashmap">
+        select * from ${name} where ${key}=#{id}
+    </select>
+
+    <!-- 查询所有 -->
+    <select id="selectAll" resultType="hashmap">
+        select * from ${name}
+    </select>
+	
+	<!-- 添加 -->
+    <insert id="insert" >
+        insert into ${name} values
+        <foreach collection="params"  item="param" open="(" separator="," close=")" >
+            #{param}
+        </foreach>
+    </insert>
+	<!-- 修改 -->
+    <update id="update">
+        update ${name} 
+        <set>
+            <foreach collection="params"  item="param">
+                ${param},
+            </foreach>
+        </set>
+        where ${key}=#{id}
+    </update>
+    
+    <!-- 条件查询 -->
+    <select id="findByExample" resultType="hashmap">
+    	select * from ${name}
+    	
+    	<where>
+    	
+            <foreach collection="params"  item="param" open="(" separator="and" close=")">
+                ${param}
+            </foreach>
+        </where>
+       
+    </select>
+    
+    <!-- 删除 -->
+    <delete id="delete">
+    delete from ${name} where ${key} = #{id}
+    </delete>
+</mapper>

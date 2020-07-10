@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neusoft.it.dao.CustomDao">
+	<resultMap type="com.neusoft.it.entity.custom" id="mbaseMapper">
+	  <id column="cus_id" property="id"/>
+	  <result column="cus_name" property="cusName"/>
+	  <result column="cus_pwd" property="cusPwd"/>
+	  <result column="cus_tel" property="cusTel"/>
+	  <result column="cus_photo" property="cusPhoto"/>
+	  <result column="cus_sex" property="cusSex"/>
+	  <result column="cus_grade" property="cusGrade"/>
+	  <result column="cus_school" property="cusSchool"/>
+	  <result column="cus_birthday" property="cusBirthday"/>
+	</resultMap>
+	<select id="login" resultMap='mbaseMapper'>
+		select * from customs_message where cus_name= #{name} and cus_pwd= #{pwd}
+	</select>
+	
+	<select id="selectById" resultMap='mbaseMapper'>
+		select * from customs_message where cus_id=#{id}
+	</select>
+
+	<select id="selectAll" resultMap="mbaseMapper">
+		select * from customs_message
+	</select> 
+
+	<insert id="insert">
+		insert into customs_message values
+		(default,#{o.cusName},#{o.cusPwd},#{o.cusTel},#{o.cusPhoto},#{o.cusSex},#{o.cusGrade},#{o.cusSchool},#{o.cusBirthday})
+	</insert>
+	<update id="update">
+		update 
+			customs_message
+		set 
+			cus_name=#{o.cusName} 
+			,cus_pwd=#{o.cusPwd}
+			,cus_tel=#{o.cusTel}
+			,cus_photo=#{o.cusPhoto}
+			,cus_sex=#{o.cusSex}
+			,cus_grade=#{o.cusGrade}
+			,cus_school=#{o.cusSchool}
+			,cus_birthday=#{o.cusBirthday}
+		where 
+			cus_id=#{id}
+	</update>
+	<delete id="delete">
+		delete from customs_message where cus_id=#{id}
+	</delete>
+</mapper>

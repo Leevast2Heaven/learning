@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neusoft.it.dao.SubjectDao">
+	<resultMap type="com.neusoft.it.entity.subject" id="sbaseMapper">
+	  <id column="sub_class_id" property="classId"/>
+	  <result column="sub_class_name" property="className"/>
+	  <result column="sub_subjects" property="subjects"/>
+	  <result column="sub_tuition" property="tuition"/>
+	  <result column="sub_tea_id" property="teaId"/>
+	  <result column="start_date" property="startDate"/>
+	  <result column="end_date" property="endDate"/>
+	  <result column="total_hours" property="totalHours"/>
+	  <result column="class_statu" property="classStatu"/>
+	  <result column="appr_time" property="apprTime"/>
+	  
+	  <result column="tea_Photo" property="teaPhoto"/>
+	  <result column="tea_name" property="teaName"/> 
+	</resultMap>
+	
+	<sql id="selectsql">
+	    select * from subject s
+		join teacher t on s.sub_tea_id=t.tea_id	
+	</sql>
+	
+	<select id="selectById" resultMap='sbaseMapper'>
+		 select * from subject where sub_class_id=#{id}
+	</select>
+	
+<select id="selectList" resultMap="sbaseMapper">
+		select * from subject 
+        <where>
+			<if test="teaId!=null and teaId!=''">
+			   and sub_tea_id like #{teaId}
+			</if>
+	    </where>
+	</select>
+	
+	<select id="selectAll" resultMap="sbaseMapper">
+		select * from subject	
+	</select> 
+	<insert id="insert">
+		insert into subject values
+		(default,#{o.className},#{o.subjects},#{o.tuition},#{o.teaId},#{o.startDate},#{o.endDate},#{o.totalHours},#{o.classStatu},#{o.apprTime})
+	</insert>
+	<update id="update">
+		update 
+			subject
+		set 
+			sub_class_name=#{o.className} 
+			,sub_subjects=#{o.subjects}
+			,sub_tuition=#{o.tuition}
+			,sub_tea_id=#{o.teaId}
+			,start_date=#{o.startDate}
+			,end_date=#{o.endDate}
+			,total_hours=#{o.totalHours}
+			,class_statu=#{o.classStatu}
+			,appr_time=#{o.apprTime}
+		where 
+			sub_class_id=#{o.classId}
+	</update>
+	<delete id="delete">
+		delete from subject where sub_class_id=#{id}
+	</delete>
+</mapper>

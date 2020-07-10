@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neusoft.it.dao.EnrollDao">
+	<resultMap type="com.neusoft.it.entity.enroll" id="ebaseMapper">
+	  <id column="enr_id" property="enrId"/>
+	  <result column="enr_cus_id" property="id"/>
+	  <result column="enr_class_id" property="classId"/>
+	  <result column="enr_statu" property="enrStatu"/>
+	  <result column="reg_time" property="regTime"/>
+	  <result column="w_pay" property="wPay"/>
+	  
+	  <result column="d_pay" property="dPay"/>
+	  <result column="trade_no" property="tradeNo"/>
+	  
+	  <result column="cus_name" property="cusName"/>
+	  <result column="cus_pwd" property="cusPwd"/>
+	  <result column="cus_tel" property="cusTel"/>
+	  <result column="cus_photo" property="cusPhoto"/>
+	  <result column="cus_sex" property="cusSex"/>
+	  <result column="cus_grade" property="cusGrade"/>
+	  <result column="cus_school" property="cusSchool"/>
+	  <result column="cus_birthday" property="cusBirthday"/>
+	  
+	  <result column="sub_class_name" property="className"/>
+	  <result column="sub_subjects" property="subjects"/>
+	  <result column="sub_tuition" property="tuition"/>
+	  <result column="sub_teacher" property="teacher"/>
+	  <result column="start_date" property="startDate"/>
+	  <result column="end_date" property="endDate"/>
+	  <result column="total_hours" property="totalHours"/>
+	  <result column="class_statu" property="classStatu"/>
+	  <result column="appr_time" property="apprTime"/>
+	</resultMap>
+	<sql id="selectsql">
+		join customs_message c on e.enr_cus_id=c.cus_id
+		join subject s on e.enr_class_id=s.sub_class_id
+	</sql>
+	<select id="selectById" resultMap='ebaseMapper'>
+		select * from enroll e
+		<include refid="selectsql"/>
+		where enr_id=#{id}
+	</select>
+<select id="selectList" resultMap="ebaseMapper">
+		select * from enroll e
+		<include refid="selectsql"/>
+        <where>
+			<if test="classId!=null">
+			   and enr_class_id like #{classId}
+			</if>
+	    </where>
+</select>
+
+	<select id="selectAll" resultMap="ebaseMapper">
+		select * from enroll e
+		<include refid="selectsql"/>
+
+	</select> 
+	<insert id="insert">
+		insert into enroll values
+		(default,#{o.id},#{o.classId},#{o.enrStatu},#{o.regTime},#{o.wPay},#{o.dPay},#{o.tradeNo})
+	</insert>
+	<update id="update">
+		update 
+			enroll
+		set 
+			enr_cus_id=#{o.id} 
+			,enr_class_id=#{o.classId}
+			,enr_statu=#{o.enrStatu}
+			,reg_time=#{o.regTime}
+			,w_pay=#{o.wPay}
+			,d_pay=#{o.dPay}
+			,trade_no=#{o.tradeNo}
+		where 
+			enr_id=#{enrid}
+	</update>
+	<delete id="delete">
+		delete from enroll where enr_id=#{enrid}
+	</delete>
+</mapper>
